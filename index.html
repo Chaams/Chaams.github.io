@@ -97,17 +97,20 @@ h1{font-size:clamp(2.6rem,6.4vw,5rem);margin:22px 0}
 .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin-top:48px}
 .suite{border:1px solid var(--line);background:var(--card);border-radius:var(--r);padding:26px;transition:.25s}
 .suite:hover{border-color:var(--accent);transform:translateY(-4px)}
-.suite header{all:unset;display:flex;justify-content:space-between;font:.74rem var(--mono);color:var(--muted)}
+.suite header{all:unset;display:flex;justify-content:space-between;font:.8rem var(--mono);color:var(--muted)}
 .suite h3{font-size:1.45rem;margin:16px 0 8px}
 .suite p{color:var(--muted);font-size:.92rem;margin-bottom:18px}
 .tags{display:flex;flex-wrap:wrap;gap:8px}
 .roles{margin-top:26px}
-.tags span{font:.74rem var(--mono);padding:4px 10px;border:1px solid var(--line);border-radius:6px;color:var(--text)}
+.tags span{font:.8rem var(--mono);padding:4px 10px;border:1px solid var(--line);border-radius:6px;color:var(--text)}
 
 /* PROJECTS */
 .proj{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center;padding:44px 0;border-top:1px solid var(--line)}
 .proj:first-of-type{margin-top:40px}
 .proj>*{min-width:0}
+.subhead{font-size:clamp(1.5rem,3vw,2rem);margin:72px 0 12px}
+.suite a.more{display:inline-block;margin-top:16px;font:.85rem var(--mono);color:var(--accent);border-bottom:1px solid currentColor}
+.part{color:var(--warn)}
 .proj:nth-child(even) .code{order:2}
 .proj .n{font:.8rem var(--mono);color:var(--accent)}
 .proj h3{font-size:2rem;margin:10px 0 12px}
@@ -229,7 +232,7 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
       <article class="suite rv"><header><span>SUITE-03</span><span class="ok">● pass</span></header><h3>GenAI & LLMOps</h3><p>Versioning de prompts, observabilité, évaluation continue et déploiement.</p><div class="tags"><span>LangSmith</span><span>Docker</span><span>GitHub Actions</span><span>Cloud</span></div></article>
       <article class="suite rv"><header><span>SUITE-04</span><span class="ok">● pass</span></header><h3>QA Automation Lead</h3><p>Stratégie de test, E2E, API, microservices Kafka, performance et quality gates.</p><div class="tags"><span>Playwright</span><span>Karate</span><span>Kafka</span><span>k6</span></div></article>
       <article class="suite rv"><header><span>SUITE-05</span><span class="ok">● pass</span></header><h3>Architecture qualité IA</h3><p>Conception de l'ensemble : garde-fous, red-teaming, sécurité des prompts, conformité.</p><div class="tags"><span>Guardrails</span><span>Red-teaming</span><span>Observabilité</span></div></article>
-      <article class="suite rv"><header><span>SUITE-06</span><span class="ok">● pass</span></header><h3>Jeu vidéo · Unreal Engine</h3><p>Prototypage de gameplay, scripts C++ / Blueprints et tests de jeu automatisés.</p><div class="tags"><span>Unreal Engine</span><span>C++</span><span>Blueprints</span><span>Gameplay</span></div></article>
+      <article class="suite rv"><header><span>SUITE-06</span><span class="ok">● pass</span></header><h3>Jeu vidéo · Unreal Engine</h3><p>Gameplay C++ / Blueprints, tests de jeu automatisés et chaîne d'assets 3D pilotée par MCP.</p><div class="tags"><span>Unreal Engine</span><span>C++</span><span>Blender</span><span>3ds Max</span><span>Maya</span><span>ZBrush</span></div></article>
     </div>
   </div>
 </section>
@@ -296,6 +299,17 @@ IMPLEMENT_SIMPLE_AUTOMATION_TEST(FHealthDeathTest,
 Health-&gt;ApplyDamage(<span class="p">999.f</span>);
 TestTrue(<span class="s">"le personnage est mort"</span>, Health-&gt;IsDead());</div>
     </article>
+
+    <h3 class="subhead rv">Pipeline jeu vidéo &amp; outils 3D</h3>
+    <p class="lead rv">Une chaîne complète pilotée par MCP : sculpture et modélisation (ZBrush, Blender, 3ds Max, Maya), validation automatique, import dans Unreal Engine. Les mentions « réel » indiquent ce qui a été exécuté avec le vrai logiciel.</p>
+    <div class="grid3">
+      <article class="suite rv"><header><span>MCP</span><span class="ok">● 11 tests</span></header><h3>Validateur d'assets 3D</h3><p>Noyau commun : nommage Unreal, budget de triangles, UV, textures, échelle. Indépendant de tout logiciel.</p><div class="tags"><span>Python</span><span>Règles métier</span><span>CLI</span></div><a class="more" data-repo="game-asset-validator" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></article>
+      <article class="suite rv"><header><span>MCP</span><span class="ok">● Blender 4.1 réel</span></header><h3>MCP · Blender</h3><p>Génère des props prêts pour le moteur (UV, échelle, FBX), inspecte et valide des .blend.</p><div class="tags"><span>Blender</span><span>MCP</span><span>bpy</span></div><a class="more" data-repo="blender-mcp-pipeline" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></article>
+      <article class="suite rv"><header><span>MCP</span><span class="ok">● Unreal 5.4 réel</span></header><h3>MCP · Unreal Engine</h3><p>Importe des FBX, liste les assets et lance les tests d'automatisation, éditeur sans interface.</p><div class="tags"><span>Unreal 5.4</span><span>MCP</span><span>Python</span></div><a class="more" data-repo="unreal-mcp-bridge" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></article>
+      <article class="suite rv"><header><span>MCP</span><span class="part">● 3ds Max réel · Maya non testé</span></header><h3>MCP · Maya & 3ds Max</h3><p>Inspection, validation et export FBX en batch, avec conversion d'unités en mètres.</p><div class="tags"><span>3ds Max</span><span>Maya</span><span>pymxs</span></div><a class="more" data-repo="maya-3dsmax-mcp-bridge" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></article>
+      <article class="suite rv"><header><span>MCP</span><span class="part">● 13 tests · ZBrush non testé</span></header><h3>MCP · ZBrush</h3><p>Analyse des exports OBJ par SubTool et plan de décimation vers le budget, ou retopologie.</p><div class="tags"><span>ZBrush</span><span>OBJ</span><span>Décimation</span></div><a class="more" data-repo="zbrush-mcp-bridge" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></article>
+      <article class="suite rv"><header><span>MCP</span><span class="ok">● Bout en bout réel</span></header><h3>Orchestrateur LangGraph</h3><p>Brief → Blender → validation → correction auto → Unreal, en parlant MCP aux serveurs.</p><div class="tags"><span>LangGraph</span><span>MCP</span><span>Bout en bout</span></div><a class="more" data-repo="ai-gamedev-orchestrator" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></article>
+      </div>
   </div>
 </section>
 
