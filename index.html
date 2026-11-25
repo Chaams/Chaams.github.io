@@ -112,6 +112,7 @@ h1{font-size:clamp(2.6rem,6.4vw,5rem);margin:22px 0}
 .suite a.more{display:inline-block;margin-top:16px;font:.85rem var(--mono);color:var(--accent);border-bottom:1px solid currentColor}
 .part{color:var(--warn)}
 .proj:nth-child(even) .code{order:2}
+.vid{margin:0}.vid video{width:100%;aspect-ratio:16/9;border-radius:var(--r);border:1px solid var(--line);background:var(--card);display:block}.vid figcaption{font:.78rem var(--mono);color:var(--muted);margin-top:8px}
 .proj .n{font:.8rem var(--mono);color:var(--accent)}
 .proj h3{font-size:2rem;margin:10px 0 12px}
 .proj p{color:var(--muted);margin-bottom:18px}
@@ -241,10 +242,14 @@ footer .wrap{display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px}
 <section id="projects">
   <div class="wrap">
     <h2 class="rv">Du code qui <em>teste</em> du code.</h2>
-    <p class="lead rv">Six projets, un par domaine de compétence. Chaque dépôt contient son README, ses tests et son pipeline CI.</p>
+    <p class="lead rv">Quatre projets, dont Qistas, un outil open source évalué en CI sur un vrai juge LLM. Chaque dépôt contient son README, ses tests et son pipeline CI.</p>
 
     <article class="proj rv">
-      <div><span class="n">PROJET 01 · AGENTS</span><h3>Système multi-agents LangGraph + MCP</h3><p>Planner, generator, runner et analyst orchestrés par un graphe LangGraph, avec validation humaine avant exécution. Les outils sont exposés via un serveur MCP utilisable depuis Claude ou un IDE.</p><div class="tags" style="margin-bottom:18px"><span>LangGraph</span><span>MCP</span><span>Python</span><span>pytest</span></div><a class="more" data-repo="multi-agent-langgraph-mcp" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
+      <div><span class="n">PROJET 01 · QUALITÉ IA · OPEN SOURCE</span><h3>Qistas, la quality gate des chatbots arabes</h3><p>CLI et GitHub Action open source qui évaluent un chatbot arabe à chaque pull request : dialecte (golfe, égyptien, maghrébin, arabe standard), fidélité aux documents, fuites de données régionales (Emirates ID, IBAN SA/AE, CIN) et injections en arabe et en arabizi. Un juge LLM (Claude, Gemini ou OpenAI) et des règles déterministes ; une seule faille de sécurité bloque la PR.</p><p>Démo réelle en CI : sur un bot d'exemple, Qistas a détecté un mauvais registre puis un refus manquant ; après correction, le score de dialecte est passé de 0,64 à 0,96.</p><div class="tags" style="margin-bottom:18px"><span>Python</span><span>LLM-as-judge</span><span>GitHub Actions</span><span>Arabe</span><span>Red-teaming</span></div><a class="more" data-repo="qistas" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a> &nbsp; <a class="more" href="https://github.com/Chaams/qistas/pull/2" target="_blank" rel="noopener">La démo en CI ↗</a></div>
+      <figure class="vid"><video src="assets/qistas-vendredi.mp4" poster="assets/qistas-poster.jpg" controls preload="none" playsinline aria-label="Vidéo explicative de Qistas, 1 minute"></video><figcaption>Le principe en 1 minute · scénario illustratif, banque fictive</figcaption></figure>
+    </article>
+    <article class="proj rv">
+      <div><span class="n">PROJET 02 · AGENTS</span><h3>Système multi-agents LangGraph + MCP</h3><p>Planner, generator, runner et analyst orchestrés par un graphe LangGraph, avec validation humaine avant exécution. Les outils sont exposés via un serveur MCP utilisable depuis Claude ou un IDE.</p><div class="tags" style="margin-bottom:18px"><span>LangGraph</span><span>MCP</span><span>Python</span><span>pytest</span></div><a class="more" data-repo="multi-agent-langgraph-mcp" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
       <div class="code"><span class="c"># src/graph.py</span>
 g = StateGraph(QAState)
 <span class="k">for</span> name, fn <span class="k">in</span> [(<span class="s">"planner"</span>, planner), (<span class="s">"generator"</span>, generator),
@@ -255,26 +260,7 @@ g.add_edge(START, <span class="s">"planner"</span>)  <span class="c"># ... -> an
 <span class="p">✔ revue humaine avant exécution</span></div>
     </article>
 <article class="proj rv">
-      <div><span class="n">PROJET 02 · RAG</span><h3>Banc d'évaluation d'un pipeline RAG</h3><p>Jeu de référence, métriques de fidélité, de hallucination, de précision du contexte et de pertinence. Des quality gates font échouer la CI sous le seuil. Fonctionne hors-ligne, prêt pour RAGAS ou DeepEval.</p><div class="tags" style="margin-bottom:18px"><span>Python</span><span>RAG</span><span>pytest</span><span>Quality gates</span></div><a class="more" data-repo="rag-eval-bench" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
-      <div class="code"><span class="c"># tests/test_rag_quality.py</span>
-<span class="k">def</span> test_faithfulness_gate(rag):
-    scores = [faithfulness(a, ctx) <span class="k">for</span> _, a, ctx <span class="k">in</span> _run(rag)]
-    <span class="k">assert</span> sum(scores) / len(scores) &gt;= <span class="p">0.90</span>
-<span class="k">def</span> test_metric_catches_hallucination():
-    <span class="c"># un LLM qui invente doit être détecté</span>
-<span class="p">✔ 5 passed</span></div>
-    </article>
-<article class="proj rv">
-      <div><span class="n">PROJET 03 · LLMOPS</span><h3>Pipeline LLMOps et porte qualité</h3><p>Prompts versionnés dans Git, comparaison candidat contre baseline (fidélité, hallucinations, latence p95, coût) et blocage de la PR en cas de régression. Exécutable en conteneur Docker.</p><div class="tags" style="margin-bottom:18px"><span>LLMOps</span><span>GitHub Actions</span><span>Docker</span><span>Python</span></div><a class="more" data-repo="llmops-eval-pipeline" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
-      <div class="code"><span class="c"># scripts/eval_gate.py</span>
-<span class="k">for</span> metric <span class="k">in</span> HIGHER_IS_BETTER:
-    <span class="k">if</span> cand[metric] &lt; base[metric] * (<span class="p">1</span> - TOLERANCE):
-        problems.append(f<span class="s">"{metric} régresse"</span>)
-<span class="k">return</span> <span class="p">1</span> <span class="k">if</span> problems <span class="k">else</span> <span class="p">0</span>  <span class="c"># bloque le déploiement</span>
-<span class="p">✔ QUALITY GATE : OK</span></div>
-    </article>
-<article class="proj rv">
-      <div><span class="n">PROJET 04 · QA LEAD</span><h3>Framework QA : E2E, API, Kafka et performance</h3><p>Playwright avec Page Object Model sur trois navigateurs, tests de contrat API, test d'un flux événementiel Kafka, charge k6 avec seuils et pipeline GitHub Actions complet.</p><div class="tags" style="margin-bottom:18px"><span>Playwright</span><span>TypeScript</span><span>Kafka</span><span>k6</span><span>GitHub Actions</span></div><a class="more" data-repo="qa-automation-framework" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
+      <div><span class="n">PROJET 03 · QA LEAD</span><h3>Framework QA : E2E, API, Kafka et performance</h3><p>Playwright avec Page Object Model sur trois navigateurs, tests de contrat API, test d'un flux événementiel Kafka, charge k6 avec seuils et pipeline GitHub Actions complet.</p><div class="tags" style="margin-bottom:18px"><span>Playwright</span><span>TypeScript</span><span>Kafka</span><span>k6</span><span>GitHub Actions</span></div><a class="more" data-repo="qa-automation-framework" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
       <div class="code"><span class="c">// tests/e2e/checkout.spec.ts</span>
 <span class="k">await</span> login.login(<span class="s">'standard_user'</span>, <span class="s">'secret_sauce'</span>);
 <span class="k">await</span> cart.addProduct(<span class="s">'Sauce Labs Backpack'</span>);
@@ -283,16 +269,7 @@ g.add_edge(START, <span class="s">"planner"</span>)  <span class="c"># ... -> an
 thresholds: { http_req_duration: [<span class="s">'p(95)&lt;500'</span>] }</div>
     </article>
 <article class="proj rv">
-      <div><span class="n">PROJET 05 · SÉCURITÉ IA</span><h3>Garde-fous LLM et red-teaming</h3><p>Architecture en couches (entrée, modèle, sortie), corpus d'attaques automatisé contre l'injection de prompt et les fuites de PII, ADR documentant la décision. Seuils : détection ≥ 95 %, zéro faux positif.</p><div class="tags" style="margin-bottom:18px"><span>Guardrails</span><span>Red-teaming</span><span>Python</span><span>ADR</span></div><a class="more" data-repo="llm-guardrails-redteam" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
-      <div class="code"><span class="c"># tests/test_redteam.py</span>
-<span class="k">def</span> test_detection_rate_gate():
-    blocked = sum(<span class="k">not</span> check_input(a).allowed <span class="k">for</span> a <span class="k">in</span> attacks)
-    <span class="k">assert</span> blocked / len(attacks) &gt;= <span class="p">0.95</span>
-<span class="k">def</span> test_no_false_positives(): ...
-<span class="p">✔ 13 passed</span></div>
-    </article>
-<article class="proj rv">
-      <div><span class="n">PROJET 06 · UNREAL ENGINE</span><h3>Gameplay Unreal Engine et tests automatisés</h3><p>Composant de santé en C++ (dégâts, soins, mort, événement) utilisable depuis les Blueprints, avec tests d'automatisation Unreal et script d'exécution en ligne de commande pour la CI.</p><div class="tags" style="margin-bottom:18px"><span>Unreal Engine</span><span>C++</span><span>Automation Tests</span></div><a class="more" data-repo="unreal-gameplay-automation" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
+      <div><span class="n">PROJET 04 · UNREAL ENGINE</span><h3>Gameplay Unreal Engine et tests automatisés</h3><p>Composant de santé en C++ (dégâts, soins, mort, événement) utilisable depuis les Blueprints, avec tests d'automatisation Unreal et script d'exécution en ligne de commande pour la CI.</p><div class="tags" style="margin-bottom:18px"><span>Unreal Engine</span><span>C++</span><span>Automation Tests</span></div><a class="more" data-repo="unreal-gameplay-automation" href="#" target="_blank" rel="noopener">Voir le dépôt ↗</a></div>
       <div class="code"><span class="c">// HealthComponentTest.cpp</span>
 IMPLEMENT_SIMPLE_AUTOMATION_TEST(FHealthDeathTest,
     <span class="s">"MyGame.Gameplay.Health.Death"</span>, ...)
@@ -337,7 +314,7 @@ TestTrue(<span class="s">"le personnage est mort"</span>, Health-&gt;IsDead());<
     <div class="cta">
       <a class="btn primary" href="mailto:douici.chamsdin@gmail.com">✉ douici.chamsdin@gmail.com</a>
       <a class="btn" href="https://www.linkedin.com/in/chamsdin/" target="_blank" rel="noopener">LinkedIn ↗</a>
-      <a class="btn" data-gh href="https://github.com/votre-pseudo" target="_blank" rel="noopener">GitHub ↗</a>
+      <a class="btn" data-gh href="https://github.com/Chaams" target="_blank" rel="noopener">GitHub ↗</a>
     </div>
   </div>
 </section>
